@@ -6,8 +6,24 @@ import { CORE_CONCEPTS } from "./data/data";
 import { EXAMPLES } from "./data/data";
 
 function App() {
+
+  let tabContent = <p>Please select a topic.</p>
+  
   const [selectedTopic, setSelectedTopic] = useState();
   const coreData = CORE_CONCEPTS;
+  
+
+  if(selectedTopic){
+    tabContent = (
+      <div id="tab-content">
+        <h3>{EXAMPLES[selectedTopic].title}</h3>
+        <p>{EXAMPLES[selectedTopic].description}</p>
+        <pre>
+          <code>{EXAMPLES[selectedTopic].code}</code>
+        </pre>
+      </div>
+    )
+  }
 
   function handleClick(selectedButton) {
     console.log(selectedButton);
@@ -41,17 +57,7 @@ function App() {
             <TabButton onSelect={() => handleClick("props")}>Props</TabButton>
             <TabButton onSelect={() => handleClick("state")}>State</TabButton>
           </menu>
-          {!selectedTopic ? (
-            <p>Please select a topic.</p>
-          ) : (
-            <div id="tab-content">
-              <h3>{EXAMPLES[selectedTopic].title}</h3>
-              <p>{EXAMPLES[selectedTopic].description}</p>
-              <pre>
-                <code>{EXAMPLES[selectedTopic].code}</code>
-              </pre>
-            </div>
-          )}
+          {tabContent}
         </section>
       </main>
     </div>
